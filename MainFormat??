@@ -4,6 +4,94 @@ import os
 
 User_Input = 'i'
 
+#Initial text file with initial data
+
+content = """Mr. Normal Gonzales
+BIO1024 Biology (UW-2-1): 9am-10am, 12pm-1pm, 3pm-4pm
+CHM1024 Chemistry (JC Hall 2): 10am-11am, 1pm-2pm, 4pm-5pm
+PHY1024 Physics (Hall 3 GC): 11am-12pm, 2pm-3pm, 5pm-6pm
+ENG1024 English (JC Hall 1): 8am-9am
+"""
+
+fileName = "timetables_24001.txt"
+
+with open(fileName, "w") as file:
+    file.write(content)
+
+fileName = "timetables_24002.txt"
+
+with open(fileName, "w") as file:
+    file.write(content)
+
+fileName = "timetables_24003.txt"
+
+with open(fileName, "w") as file:
+    file.write(content)
+
+content = """BIO1024: pending
+CHM1024: pending
+PHY1024: pending
+ENG1024: pending
+"""
+
+fileName = "assignment_24001.txt"
+
+with open(fileName, "w") as file:
+    file.write(content)
+
+fileName = "assignment_24002.txt"
+
+with open(fileName, "w") as file:
+    file.write(content)
+
+fileName = "assignment_24003.txt"
+
+with open(fileName, "w") as file:
+    file.write(content)
+
+content = "0\n0\n0\n0\n0\n0\n0\n0\n0\n0"
+
+fileName = "attendance_24001.txt"
+
+with open(fileName, "w") as file:
+    file.write(content)
+
+fileName = "attendance_24002.txt"
+
+with open(fileName, "w") as file:
+    file.write(content)
+
+fileName = "attendance_24003.txt"
+
+with open(fileName, "w") as file:
+    file.write(content)
+
+content = """24001: Rex Vaquez
+24002: Aston Clover
+24003: Eric Harmon"""
+
+fileName = "BioStudents.txt"
+
+with open(fileName, "w") as file:
+    file.write(content)
+
+fileName = "ChemStudents.txt"
+
+with open(fileName, "w") as file:
+    file.write(content)
+
+fileName = "PhyStudents.txt"
+
+with open(fileName, "w") as file:
+    file.write(content)
+
+fileName = "EngStudents.txt"
+
+with open(fileName, "w") as file:
+    file.write(content)
+
+###################################################################
+
 def Mark_Attendance():
     
     print("Mark Attendance")
