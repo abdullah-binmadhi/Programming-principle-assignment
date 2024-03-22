@@ -34,17 +34,17 @@ PHY1024: pending
 ENG1024: pending
 """
 
-fileName = "assignment_24001.txt"
+fileName = "assignments_24001.txt"
 
 with open(fileName, "w") as file:
     file.write(content)
 
-fileName = "assignment_24002.txt"
+fileName = "assignments_24002.txt"
 
 with open(fileName, "w") as file:
     file.write(content)
 
-fileName = "assignment_24003.txt"
+fileName = "assignments_24003.txt"
 
 with open(fileName, "w") as file:
     file.write(content)
@@ -294,18 +294,17 @@ def attend_code():
         lect_c = int(input("Select class: "))
         if lect_c == 1:
             print ("Attendance code for English is :", attend_c)
-        if (lect_c == 2) or (lect_c == 5) or (lect_c == 8):
+        elif lect_c in [2, 5, 8]:
             print ("Attendance code for Biology is :", attend_c)
-        if (lect_c == 3) or (lect_c == 6) or (lect_c == 9):
+        elif lect_c in [3, 6, 9]:
             print ("Attendance code for Chemistry is :", attend_c)
-        if (lect_c == 4) or (lect_c == 7) or (lect_c == 10):
+        elif lect_c in [4, 7, 10]:
             print ("Attendance code for Physics is :", attend_c)
         else:
             print("Invalid selection.")
             
     else:
         print("Incorrect Password.")
-        return attend_code()
     
 ###################################################################
     
