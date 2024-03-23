@@ -496,7 +496,7 @@ def edit_line(filename, user_prompt):
             if line.startswith(user_prompt):
                 found = True
                 new_line = input(f"Enter updated status for '{line.strip()}': ")
-                lines[i] = f"{user_prompt}:{new_line}\n"
+                lines[i] = f"{user_prompt}: {new_line}\n"
                 print("Status updated successfully.")
                 break
 
