@@ -456,10 +456,13 @@ def check_assignment_file(student_id):
 
     if os.path.exists(filename):
         print(f"Student found")
+        return filename
+        
     else:
         print(f"File '{filename}' does not exist.")
 
     return filename
+
 
 def displayStatus():
     student_id = input("Enter the student ID: ")
@@ -479,25 +482,32 @@ def check_staffID(staffID):
     try:
         with open("staffDetails.txt", 'r') as file:
             for line in file:
-                if line.startswith(staffID):
+                if line.strip() == str(staffID):
                     return True
         return False
     except FileNotFoundError:
         print("Error: File not found.")
         return False
     
-def edit_line(filename, user_prompt):
+def edit_line(filename, subjectID):
     try:
         with open(filename, 'r') as file:
             lines = file.readlines()
 
         found = False
         for i, line in enumerate(lines):
-            if line.startswith(user_prompt):
+            if line.lower().startswith(subjectID.lower()):
                 found = True
-                new_line = input(f"Enter updated status for '{line.strip()}': ")
-                lines[i] = f"{user_prompt}: {new_line}\n"
-                print("Status updated successfully.")
+
+                staff_input = str(input("Would you like to change the status to [a]Submitted or [b]Pending? "))
+                if staff_input == 'a':
+                    lines[i] = f"{subjectID}: submitted\n"
+                    print("You have changed the status to submitted.")
+                elif staff_input == 'b':
+                    lines[i] = f"{subjectID}: pending\n"
+                    print("You have changed the status to pending.")
+                else:
+                    print("Please select a correct option next time.")
                 break
 
         if not found:
@@ -507,6 +517,34 @@ def edit_line(filename, user_prompt):
         with open(filename, 'w') as file:
             file.writelines(lines)
 
+        return True
+
+    except FileNotFoundError:
+        print("Error: File not found.")
+        return False
+    
+def edit_line_student(filename, student_id, subjectID):
+    try:
+        with open(filename, 'r') as file:
+            lines = file.readlines()
+
+        found = False
+        for i, line in enumerate(lines):
+            if line.lower().startswith(subjectID.lower()):
+                found = True
+                if "pending" in line.lower():
+                    lines[i] = f"{subjectID}: submitted\n"
+                    print("You have submitted the assignment.")
+                else:
+                    print("Coursework is already submitted.")
+                break
+
+        if not found:
+            print("Incorrect Subject ID")
+            return False
+
+        with open(filename, 'w') as file:
+            file.writelines(lines)
         return True
 
     except FileNotFoundError:
@@ -525,13 +563,27 @@ def edit_course_status():
         edit_line(filename, subjectID)
     
     else:
+        print("Staff ID is incorrect, please try again\n")
         return
+    
+def edit_course_status_student():
+    student_id = input("Enter your student ID: ")
+    filename = check_assignment_file(student_id)
+    subjectID = input("Enter Subject Code: ")
+
+    edit_line_student(filename, student_id, subjectID)
 
 def Check_Assignment():
-    prompt = input("Are you a Student(a) or Staff member(b): ")
+    prompt = input("Are you a Student(a) or Staff member(b)?: ")
 
     if prompt == "a":
-        displayStatus()
+        prompt2 = input("Do you want to view (v) or update(u) your status?: ")
+
+        if prompt2 == "v":
+            displayStatus()
+
+        elif prompt2 == "u":
+            edit_course_status_student()
 
     elif prompt == "b":
         edit_course_status()
