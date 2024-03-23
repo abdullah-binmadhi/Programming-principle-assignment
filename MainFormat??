@@ -95,7 +95,7 @@ content = """14001"""
 fileName = "staffDetails.txt"
 
 with open(fileName, "w") as file:
-    file.write(content)s
+    file.write(content)
 
 ###################################################################
 
