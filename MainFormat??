@@ -542,7 +542,52 @@ def Check_Assignment():
 ###################################################################
 
 def Display():
-    print("Display")
+#To ask to display Attendance Percentage, Timetable or Assignment Status in one menu without needing to go through them individually#   
+    Student_ID = input("What is your student ID? ")
+    
+    
+    asking = (input("Which one do you want to Display? \na)Attendance \nb)Timetable \nc)Assignment Status \n :"))
+    
+        
+    if asking == 'a':
+            print("Attendance")
+            filename = ('attendance_' + Student_ID + '.txt')
+            c = Counter()
+            with open(filename) as f:
+                for line in f:
+                    vote = line.strip()
+                    c[vote] += 1
+            
+            percent = (c['1']/10)*100
+            print ("Your attendance percentage is: ", percent,"%")
+    elif asking == 'b':
+            print("Timetable")
+            filename = ('timetables_' + Student_ID + '.txt')
+            with open(filename, 'r') as f:
+                lines = f.readlines()
+            course_order = ['BIO', 'CHM', 'PHY', 'ENG']
+            sorted_lines = sorted(lines, key=lambda line: [course_order.index(course[:3]) for course in line.split() if course[:3] in course_order])
+            with open(filename, 'w') as f:
+                f.writelines(sorted_lines)
+            with open(filename, 'r') as f:
+                print(f.read())
+            
+    elif asking == 'c':
+            print("Assignment Status")
+            filename = check_assignment_file(Student_ID)
+        
+
+            try:
+                with open(filename, 'r') as file:
+                    assignment_status = file.read().strip()
+                    print(f"Assignment status for student ID {Student_ID}:\n{assignment_status}")
+            except FileNotFoundError:
+                print("Terminating loop/program")
+            except Exception as e:
+                print(f"An error occurred: {e}")
+
+    else:
+        print("Invalid Option")    
 
 ###################################################################
 
