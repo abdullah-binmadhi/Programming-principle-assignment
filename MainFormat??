@@ -90,6 +90,13 @@ fileName = "EngStudents.txt"
 with open(fileName, "w") as file:
     file.write(content)
 
+content = """14001"""
+
+fileName = "staffDetails.txt"
+
+with open(fileName, "w") as file:
+    file.write(content)s
+
 ###################################################################
 
 def Mark_Attendance():
@@ -442,8 +449,95 @@ def Manage_Timetable():
 
 ###################################################################
 
+def check_assignment_file(student_id):
+    file_prefix = "assignments_"
+    file_extension = ".txt"
+    filename = file_prefix + student_id + file_extension
+
+    if os.path.exists(filename):
+        print(f"Student found")
+    else:
+        print(f"File '{filename}' does not exist.")
+
+    return filename
+
+def displayStatus():
+    student_id = input("Enter the student ID: ")
+    filename = check_assignment_file(student_id)
+    
+
+    try:
+        with open(filename, 'r') as file:
+            assignment_status = file.read().strip()
+            print(f"Assignment status for student ID {student_id}:\n{assignment_status}")
+    except FileNotFoundError:
+        print("Terminating loop/program")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+def check_staffID(staffID):
+    try:
+        with open("staffDetails.txt", 'r') as file:
+            for line in file:
+                if line.startswith(staffID):
+                    return True
+        return False
+    except FileNotFoundError:
+        print("Error: File not found.")
+        return False
+    
+def edit_line(filename, user_prompt):
+    try:
+        with open(filename, 'r') as file:
+            lines = file.readlines()
+
+        found = False
+        for i, line in enumerate(lines):
+            if line.startswith(user_prompt):
+                found = True
+                new_line = input(f"Enter updated status for '{line.strip()}': ")
+                lines[i] = f"{user_prompt}:{new_line}\n"
+                print("Status updated successfully.")
+                break
+
+        if not found:
+            print("Incorrect Staff ID")
+            return False
+
+        with open(filename, 'w') as file:
+            file.writelines(lines)
+
+        return True
+
+    except FileNotFoundError:
+        print("Error: File not found.")
+        return False
+    
+def edit_course_status():
+    staffID = input("Enter Staff ID: ")
+    thing = check_staffID(staffID)
+
+    if thing == True:
+        student_id = input("Enter the student ID: ")
+        filename = check_assignment_file(student_id)
+        subjectID = input("Enter CourseID: ")
+
+        edit_line(filename, subjectID)
+    
+    else:
+        return
+
 def Check_Assignment():
-    print("Check Assignment")
+    prompt = input("Are you a Student(a) or Staff member(b): ")
+
+    if prompt == "a":
+        displayStatus()
+
+    elif prompt == "b":
+        edit_course_status()
+
+    else:
+        print("error")
 
 ###################################################################
 
